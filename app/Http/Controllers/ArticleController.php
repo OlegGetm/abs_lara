@@ -50,6 +50,7 @@ class ArticleController extends Controller
         $fetch->relations  = ['tag_slug' => ['tags', 'slug'],
                               'category_slug' => ['category', 'slug']];
         $fetch->with       = ['authors', 'tags', 'category'];
+        $fetch->order      = 'articles.created_at';
         // $fetch->likes   = $likes;
         // $fetch->pages   = 5;
         $articles = $fetch->fetch();

@@ -13,6 +13,7 @@ class FetchModel extends Model
     public $relations = [];
     public $likes = [];
     public $with = [];
+    public $order;
     public $pages = 10;
 
     public function __construct($query)
@@ -40,6 +41,9 @@ class FetchModel extends Model
 
         if (count($this->with) > 0) {
             $this->query->with($this->with);
+        }
+        if ($this->order) {
+            $this->query->orderBy($this->order);
         }
         return $this->query->paginate($this->pages);
      }
