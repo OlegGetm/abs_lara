@@ -14,7 +14,7 @@
         @foreach (explode("\n", $article->content) as $k => $par)
             @include ('article.inc.picture_float', ['pictures' => $pictures, 'k' => $k])
 
-            <?= preg_match('/^(<h|<table|<div|<ul)/i', ltrim($par)) ? $par : "<p>$par</p>" ?>
+            <?= preg_match('/^(<h|<table|<div|<ul|<div)/i', ltrim($par)) ? $par : "<p>$par</p>" ?>
             @include ('article.inc.pictures', ['pictures' => $pictures, 'k' => $k])
         @endforeach
         

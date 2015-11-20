@@ -5,7 +5,7 @@
         </a>
     </div>
     <div class="col-md-8 col-xs-8 title">
-        <h4>{{ $article->category->name }}</h4>
+        <h4>{{ $article->category->parent->name }} / {{$article->category->name }}</h4>
         <h2>
              <a href="/article/{{ $article->slug }}">{{ $article->title }}</a>
         </h2>

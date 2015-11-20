@@ -12,6 +12,9 @@
             @foreach ($articles as $article)
                 @include ('article.inc.list_item', ['article' => $article])
             @endforeach
+            </ul>
+
+            <?= $articles->render(); ?>
         @endif
         </section>
     </div>
