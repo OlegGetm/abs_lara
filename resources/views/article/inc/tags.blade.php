@@ -5,7 +5,7 @@
         </div>
         <div class="col-md-11 col-xs-10">
             @foreach ($tags as $tag)
-                <a href="articles/list/tag/{{ $tag->slug }}" class="<?= $tag->type == 2 ? 'brand' : '' ?>">{{ $tag->name }}</a>
+                <a href="/list/tag/{{ $tag->slug }}" class="<?= $tag->type == 2 ? 'brand' : '' ?>">{{ $tag->name }}</a>
             @endforeach
         </div>
     </div>

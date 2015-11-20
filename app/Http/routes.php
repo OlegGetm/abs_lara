@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 Route::get('article/{slug}', 'ArticleController@show');
 // Route::get('articles/{id}', 'ArticleController@show');
-Route::get('articles/list', 'ArticleController@index');
+Route::get('list/tag/{tag_slug}', 'ArticleController@index');
+Route::get('list/category/{category_slug}', 'ArticleController@index');
 
 // ['uses' => 'FooController@method', 'as' => 'name']
