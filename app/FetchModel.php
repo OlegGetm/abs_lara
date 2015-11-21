@@ -10,11 +10,12 @@ class FetchModel extends Model
     private $params;
 
     public $conditions = [];
-    public $relations = [];
-    public $likes = [];
-    public $with = [];
-    public $order;
-    public $pages = 10;
+    public $relations  = [];
+    public $likes      = [];
+    public $with       = [];
+    public $orderBy;
+    public $perPage    = 10;
+
 
     public function __construct($query)
     {
@@ -24,11 +25,12 @@ class FetchModel extends Model
     }
 
 
-     public function fetch()
-     {
+    public function prepare()
+    {
         foreach ($this->params as $g => $value) {
-              if (isset($this->conditions[$g])) {
-                $this->query->where([$this->conditions[$g] => $value]);
+
+            if (in_array($g, $this->conditions)) { 
+                $this->query->where($g, $value);
             }
 
             if (isset($this->relations[$g])) {
@@ -42,10 +44,22 @@ class FetchModel extends Model
         if (count($this->with) > 0) {
             $this->query->with($this->with);
         }
-        if ($this->order) {
-            $this->query->orderBy($this->order);
+        
+        if ($this->orderBy) {
+            foreach($this->orderBy as $item) {
+                $dir = isset($item[1]) ? $item[1] : 'asc';
+                $this->query->orderBy($item[0], $dir);
+            }
         }
-        return $this->query->paginate($this->pages);
-     }
+        return $this->query;
+    }
+
+
+
+    public function fetch($paginate = true)
+    {   
+        $q = $this->prepare();
+        return $paginate ? $q->paginate($this->perPage) : $q->get();
+    }
 
 }
