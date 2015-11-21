@@ -8,10 +8,8 @@ class Article extends Model
 {
     const ACCESS_STANDARD = 1;  
     const ACCESS_FOR_ALL  = 2;
-
     const STATE_PUBLISHED = 1;
     const STATE_DRAFT     = 2;
-    // const STATE_ARCHIVED = 3;
 
 
     public function authors()
@@ -41,14 +39,16 @@ class Article extends Model
 
     public function magazine()
     {
-        return $this->belongsTo('App\Magazine');
+        return $this->belongsTo('App\Magazine', 'issue', 'issue');
     }
 
 
     public function scopeActive($query)
     {
-        return $query->where(['articles.state' => static::STATE_PUBLISHED])
-                     ->where('magazines.access', '<>', Magazine::ACCESS_DENY);
+        return $query
+            ->leftJoin('magazines', 'magazines.issue', '=', 'articles.issue')
+            ->where('articles.state', static::STATE_PUBLISHED)
+            ->where('magazines.access', '<>', Magazine::ACCESS_DENY);
     }
 
 
