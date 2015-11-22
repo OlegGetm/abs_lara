@@ -45,20 +45,19 @@ class ArticleController extends Controller
 
     public function index()
     {   
-        $fetch = new FetchModel(Article::query()->active());
+        $fetch = new FetchModel(Article::query()->active()->with('category'));
         $fetch->conditions = ['issue'];
         $fetch->relations  = ['tag_slug' => ['tags', 'slug'],
                               'category_slug' => ['category', 'slug']];
-        $fetch->with       = ['authors', 'tags', 'category'];
+        $fetch->orderBy    = [['articles.created_at', 'asc'], ['articles.issue']];
+        $articles = $fetch->fetch();
+        
+        // $fetch->with       = ['category'];
         // $fetch->likes   = $likes;
         // $fetch->perPage   = 5;
-        $fetch->orderBy    = [['articles.created_at', 'asc'], ['articles.issue']];
-        
         // $articles = $fetch->prepare()->paginate(4);
-        $articles = $fetch->fetch();
 
         return view('article.index', compact('articles'));
-       
     }
 
 

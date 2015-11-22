@@ -1,7 +1,7 @@
 <li class="row">
     <div class="col-md-3 col-xs-4 pad-left-null">
         <a href="/article/{{ $article->slug }}">
-             <img src="/pictures/article/midi/{{ $article->image_src }}">
+             <img src="{{ $article->thumbMidi }}">
         </a>
     </div>
     <div class="col-md-8 col-xs-8 title">
