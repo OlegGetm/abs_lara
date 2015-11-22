@@ -1,13 +1,34 @@
 <?php
 
-namespace App;
+/*
+|----------------------------------------------------------
+|  EXAMPLE:
+|----------------------------------------------------------
+|    $fetch = new ArticleFetch(Article::query()->active());
+|
+|    $fetch->conditions = ['issue'];
+|    $fetch->relations  = ['tag_slug' => ['tags', 'slug'],
+|                              'category_slug' => ['category', 'slug']];
+|    $fetch->likes   = ['title', 'name'];
+|    
+|    $fetch->orderBy = [['articles.created_at', 'asc'], ['articles.issue']];
+|    $fetch->with    = ['category'];
+|    $fetch->perPage   = 5;
+|----------------------------------------------------------    
+|    $articles = $fetch->getCollection();
+|    OR    
+|    $articles = $fetch->getQuery()->paginate(4);
+|----------------------------------------------------------    
+*/
+
+namespace App\Fetch;
 
 use Illuminate\Database\Eloquent\Model;
 
-class FetchModel extends Model
+class Fetch extends Model
 {   
-    private $query;
-    private $params;
+    protected $query;
+    protected $params;
 
     public $conditions = [];
     public $relations  = [];
@@ -22,11 +43,14 @@ class FetchModel extends Model
         $this->query = $query;
         $this->params = array_merge(\Route::current()->parameters(),
                                     \Request::input());
+        if (method_exists($this, 'prepare')) {
+            $this->prepare();
+        }
     }
 
 
-    public function prepare()
-    {
+    public function getQuery()
+    {   
         foreach ($this->params as $g => $value) {
 
             if (in_array($g, $this->conditions)) { 
@@ -55,10 +79,9 @@ class FetchModel extends Model
     }
 
 
-
-    public function fetch($paginate = true)
+    public function getCollection($paginate = true)
     {   
-        $q = $this->prepare();
+        $q = $this->getQuery();
         return $paginate ? $q->paginate($this->perPage) : $q->get();
     }
 
