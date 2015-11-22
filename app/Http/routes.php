@@ -20,4 +20,17 @@ Route::get('article/{slug}', 'ArticleController@show');
 Route::get('list/tag/{tag_slug}', 'ArticleController@index');
 Route::get('list/category/{category_slug}', 'ArticleController@index');
 
+
+Route::group([
+        'prefix' => 'adminzone', 
+        'namespace' => 'Admin', 
+        // 'middleware' => 'auth'
+    ], function () {
+    Route::resource('article', 'ArticleController');
+    Route::resource('tag', 'TagController');
+});
+
+
+
+
 // ['uses' => 'FooController@method', 'as' => 'name']
