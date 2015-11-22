@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Log;
 
 class Article extends Model
 {
@@ -42,6 +43,10 @@ class Article extends Model
         return $this->belongsTo('App\Magazine', 'issue', 'issue');
     }
 
+    public function getThumbMidiAttribute()
+    {   
+        return Helper::getImageSrc('/pictures/article/midi/' . $this->image_src, '/images/blank-image.png');
+    }
 
     public function scopeActive($query)
     {

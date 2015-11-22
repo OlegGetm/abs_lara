@@ -7,7 +7,7 @@
             <li>
                 <div class="col-md-3 col-xs-6 similar-item">
                     <a href="/article/{{ $item->slug }}">
-                        <img src="/pictures/article/midi/{{ $item->image_src }}">
+                        <img src="{{ $item->thumbMidi }}">
                         <h4>{{ $item->title }}</h4>
                     </a>
                 </div>
