@@ -12,7 +12,8 @@ class ArticleController extends Controller
        
     public function index()
     {   
-        echo 'Good work!';
+
+        return view('admin.article.index');
 
     }
 
