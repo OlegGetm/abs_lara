@@ -3,10 +3,13 @@
 namespace App\Fetch;
 
 use App\Fetch\Fetch;
+use App\Article;
 
 
 class ArticleFetch extends Fetch
 {   
+
+    public $modelClass = 'App\Article';
     public $conditions = ['issue'];
     public $relations  = ['tag_slug' => ['tags', 'slug'],
                           'category_slug' => ['category', 'slug']];

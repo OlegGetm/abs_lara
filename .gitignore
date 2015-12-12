@@ -7,3 +7,13 @@ Homestead.json
 
 /public/packages
 /resources/views/vendor
+
+# phpstorm, netbeans, eclipse project files, thumbnail cache, Mac DS_Store Files
+.idea
+nbproject
+.buildpath
+.project
+.settings
+Thumbs.db
+.DS_Store
+*.rar

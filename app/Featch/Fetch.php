@@ -18,6 +18,26 @@
 |    $articles = $fetch->getCollection();
 |    OR    
 |    $articles = $fetch->getQuery()->paginate(4);
+|    
+|----------------------------------------------------------    
+|  OR  COMPACT if  query has default conditions:
+|----------------------------------------------------------    
+|    
+|   $fetch = new ArticleFetch();
+|   $articles = $fetch->getCollection();
+|
+|----------------------------------------------------------    
+|  OR  SUPER COMPACT:
+|----------------------------------------------------------  
+|     $articles = ArticleFetch::make();
+|     
+|    $articles = ArticleFetch::make(null, $paginate = false);
+| 
+| / or /
+| 
+|     $articles = ArticleFetch::make(Article::query()
+|         ->active()->orderBy('articles.title', 'desc'));
+| 
 |----------------------------------------------------------    
 */
 
@@ -30,6 +50,7 @@ class Fetch extends Model
     protected $query;
     protected $params;
 
+    public $modelClass = null;
     public $conditions = [];
     public $relations  = [];
     public $likes      = [];
@@ -38,9 +59,16 @@ class Fetch extends Model
     public $perPage    = 10;
 
 
-    public function __construct($query)
-    {
-        $this->query = $query;
+    public function __construct($query = null)
+    {   
+        if (is_null($query) && !is_null($this->modelClass)) {
+           $model = $this->modelClass;
+           $this->query = $model::query();
+        
+        }  else {
+            $this->query = $query;
+        }
+
         $this->params = array_merge(\Route::current()->parameters(),
                                     \Request::input());
         if (method_exists($this, 'prepare')) {
@@ -49,6 +77,13 @@ class Fetch extends Model
     }
 
 
+    public static function make($query = null, $paginate = true)
+    {   
+        $instance = new static($query);
+        return $instance->getCollection($paginate);
+    }
+
+    
     public function getQuery()
     {   
         foreach ($this->params as $g => $value) {

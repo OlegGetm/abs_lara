@@ -25,8 +25,7 @@ class ArticleController extends Controller
     
     public function index()
     {   
-        $fetch = new ArticleFetch(Article::query()->active());
-        $articles = $fetch->getCollection();
+        $articles = ArticleFetch::make(Article::query()->active());
         return view('article.index', compact('articles'));
     }
 
