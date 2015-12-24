@@ -5,8 +5,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Log;
 
+
 class Article extends Model
 {
+    // use \App\Traits\Models\ModelJoinTrait;
+
     const ACCESS_STANDARD = 1;  
     const ACCESS_FOR_ALL  = 2;
     const STATE_PUBLISHED = 1;
@@ -52,6 +55,24 @@ class Article extends Model
     {   
         return self::multiArrayzer($this->pictures);
     }
+
+
+    // public function scopeModelJoin($query, $relation_name, $operator = '=', $type = 'left', $where = false) {
+    //     $relation = $this->$relation_name();
+    //     $table = $relation->getRelated()->getTable();
+    //     $one = $relation->getQualifiedParentKeyName();
+    //     $two = $relation->getForeignKey();
+
+    //     if (empty($query->columns)) {
+    //         $query->select($this->getTable().".*");
+    //     }
+    //     foreach (\Schema::getColumnListing($table) as $related_column) {
+    //         $query->addSelect("`$table`.`$related_column` AS `$table.$related_column`");
+    //     }
+    //     return $query->join($table, $one, $operator, $two, $type, $where); 
+    //     //->with($relation_name);
+
+    // }
 
 
     public function scopeActive($query)

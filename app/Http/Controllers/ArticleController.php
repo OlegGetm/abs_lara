@@ -14,7 +14,7 @@ class ArticleController extends Controller
     {   
         // $article = Article::with('authors', 'tags', 'pictures', 'videos', 'category')->findOrFail($id);
         
-        $article = Article::where(['slug' => $slug])->with('authors', 'tags', 'pictures', 'videos', 'category')->first();
+        $article = Article::where(['articles.slug' => $slug])->with('authors', 'tags', 'pictures', 'videos', 'category')->first();
 
         $pictures = $article->picturesArray;
         return view('article.show', compact('article', 'pictures'));
