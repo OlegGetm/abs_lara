@@ -16,10 +16,8 @@ class ArticleController extends Controller
         
         $article = Article::where(['slug' => $slug])->with('authors', 'tags', 'pictures', 'videos', 'category')->first();
 
-        $pictures = Article::multiArrayzer($article->pictures);
-        $videos   = Article::multiArrayzer($article->videos);
-
-        return view('article.show', compact('article', 'pictures', 'videos'));
+        $pictures = $article->picturesArray;
+        return view('article.show', compact('article', 'pictures'));
     }
 
     

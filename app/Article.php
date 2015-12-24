@@ -48,6 +48,12 @@ class Article extends Model
         return Helper::getImageSrc('/pictures/article/midi/' . $this->image_src, '/images/blank-image.png');
     }
 
+    public function getPicturesArrayAttribute()
+    {   
+        return self::multiArrayzer($this->pictures);
+    }
+
+
     public function scopeActive($query)
     {
         return $query
